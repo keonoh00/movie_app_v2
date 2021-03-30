@@ -18,23 +18,25 @@ const Container = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: linear-gradient(#7BC6CC, #BE93C5, #f4c4f3);
     width: 100%;
-`
+    `
 
 const Header = styled.header`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(#DB7BFD, #FFFFFF);
-    height: 70vh;
+    height: 50vh;
     width: 100%;
 `
 
 const Title = styled.h1`
+    position: relative;
+    top: -50px;
     margin-bottom: 20px;
-    font-size: 64px;
-    font-weight: 500;
+    font-size: 60px;
+    font-weight: 600;
     color: white;
 `
 
@@ -50,14 +52,16 @@ const Loading = styled.span`
 `;
 
 const MovieList = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    top: -50px;
+    display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 25px;
+  width: 60%;
+  position: relative;
+  top: -50px;
 `;
 
 export default () => {
-    const { loading, error, data } = useQuery(GET_MOVIES);
+    const { loading, data } = useQuery(GET_MOVIES);
     return (
         <Container>
             <Header>
@@ -70,7 +74,7 @@ export default () => {
             </Header>
             {loading && <Loading>Loading...</Loading>}
             <MovieList>
-                {!loading && data.movies && data.movies.map(m => <Movie key={m.id} id={m.id} title={m.title} image={m.medium_cover_image} />)}
+                {data?.movies.map(m => <Movie key={m.id} id={m.id} title={m.title} image={m.medium_cover_image} />)}
             </MovieList>
         </Container>
     )
